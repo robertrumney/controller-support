@@ -7,13 +7,18 @@ public class GamepadCharacterManager : MonoBehaviour
 {
     public SelectableCharacter[] characters;
     private int currentCharacterIndex = 0;
-    private float stickDeadzone = 0.1f; // Adjust this value for stick sensitivity
-    private float inputCooldown = 0.5f; // Time in seconds between inputs
+
+    // Adjust this value for stick sensitivity
+    private readonly float stickDeadzone = 0.1f; 
+
+    // Time in seconds between inputs
+    private readonly float inputCooldown = 0.3f; 
+
     private float lastInputTime;
 
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
 
         UpdateCharacterSelection();
     }
@@ -35,6 +40,11 @@ public class GamepadCharacterManager : MonoBehaviour
                 CycleCharacter(direction);
                 lastInputTime = Time.time;
             }
+        }
+
+        if (WasGamepadButtonPressed())
+        {
+            OnSelectCharacter();
         }
     }
 
@@ -91,6 +101,25 @@ public class GamepadCharacterManager : MonoBehaviour
                                          Gamepad.current.dpad.y.ReadValue())) > stickDeadzone;
         }
 
+        return false;
+    }
+
+    private bool WasGamepadButtonPressed()
+    {
+        var gamepad = Gamepad.current;
+        if (gamepad != null)
+        {
+            // Check specific buttons: A, B, X, Y, and triggers
+            if (gamepad.buttonSouth.wasPressedThisFrame || // A
+                gamepad.buttonWest.wasPressedThisFrame ||  // X
+                gamepad.buttonNorth.wasPressedThisFrame || // Y
+                gamepad.buttonEast.wasPressedThisFrame ||  // B
+                gamepad.leftTrigger.wasPressedThisFrame ||
+                gamepad.rightTrigger.wasPressedThisFrame)
+            {
+                return true;
+            }
+        }
         return false;
     }
 }
