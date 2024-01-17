@@ -1,6 +1,10 @@
 using UnityEngine;
-using UnityEngine.EventSystems; // Needed for Event System
-using UnityEngine.InputSystem; // Needed for the new Input System
+
+// Needed for Event System
+using UnityEngine.EventSystems;
+
+// Import the new Input System namespace
+using UnityEngine.InputSystem;  
 
 public class GamepadMenu : MonoBehaviour
 {
