@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+
+// Import the new Input System namespace
 using UnityEngine.InputSystem;
 
 public class GamepadDetection : MonoBehaviour
