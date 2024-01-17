@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 // Import the new Input System namespace
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class OnEnableCutsceneLock : MonoBehaviour
 {
@@ -13,22 +14,33 @@ public class OnEnableCutsceneLock : MonoBehaviour
 
     // Index of the currently active camera
     public int currentCam = 0;
+    
     // Frequency of camera switches
     public float freq = 5;
+   
     // Speed of camera movement
     public float moveSpeed = 1;
+   
     // Speed of camera rotation
     public float rotSpeed = 1;
 
     // Reference to the Text UI for hold-to-skip message
     public Text holdToSkip;
+    
     // Reference to an Animation component
     public Animation anim;
 
     // Reference to the main camera's Transform
     private Transform mainCam;
+    
     // Name of the level to load after the cutscene
-    private string goToLevel = "Mission 1";
+    private readonly string goToLevel = "Mission 1";
+
+    // Boolean to check if the player can hold to skip
+    private bool canHold = true;
+    
+    // Duration of how long the key/button is held
+    private float isHolding;
 
     private void Awake()
     {
@@ -76,8 +88,25 @@ public class OnEnableCutsceneLock : MonoBehaviour
 
         if (canHold)
         {
-            // Check if any key is pressed using the new Input System
-            if (Keyboard.current.anyKey.isPressed)
+            // Check if any key is pressed using the new Input System for Keyboard
+            bool isAnyKeyPressed = Keyboard.current.anyKey.isPressed;
+
+            // Check for any button press on the Gamepad, if a Gamepad is connected
+            bool isAnyGamepadButtonPressed = false;
+            if (Gamepad.current != null)
+            {
+                foreach (var control in Gamepad.current.allControls)
+                {
+                    if (control is ButtonControl buttonControl && buttonControl.isPressed)
+                    {
+                        isAnyGamepadButtonPressed = true;
+                        break;
+                    }
+                }
+            }
+
+            // Check if any key is pressed using the new Input System for Keyboard or Gamepad
+            if (isAnyKeyPressed || isAnyGamepadButtonPressed)
             {
                 // Increment the hold time
                 isHolding += Time.deltaTime;
@@ -88,6 +117,7 @@ public class OnEnableCutsceneLock : MonoBehaviour
 
                 // Update the hold-to-skip text
                 holdToSkip.text = "HOLD TO SKIP - " + timeLeft.ToString() + " SECONDS LEFT";
+
                 // Show the text background
                 textBG.SetActive(true);
 
@@ -96,24 +126,21 @@ public class OnEnableCutsceneLock : MonoBehaviour
                 {
                     holdToSkip.text = "";
                     canHold = false;
+
                     // Stop all coroutines
                     StopAllCoroutines();
+
                     // Load the specified level
                     LoadingScreen.instance.Load(goToLevel);
                 }
             }
             else
             {
-                // Reset holding variables if no key is pressed
+                // Reset holding variables if no key or button is pressed
                 isHolding = 0;
                 holdToSkip.text = "";
                 textBG.SetActive(false);
             }
         }
     }
-
-    // Boolean to check if the player can hold to skip
-    bool canHold = true;
-    // Duration of how long the key is held
-    float isHolding;
 }
