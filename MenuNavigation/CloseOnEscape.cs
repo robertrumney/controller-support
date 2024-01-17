@@ -1,5 +1,7 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // Import the new Input System namespace
+
+// Import the new Input System namespace
+using UnityEngine.InputSystem; 
 
 public class CloseOnEscape : MonoBehaviour
 {
