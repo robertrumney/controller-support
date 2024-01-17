@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class GamepadDetection : MonoBehaviour
 {
     // Public variable to check if a gamepad is connected
-    public bool IsGamepadConnected { get; private set; }
+    public bool IsGamepadConnected; 
 
     // Event for gamepad connection changes
     public event Action<bool> OnGamepadConnectionChanged;
