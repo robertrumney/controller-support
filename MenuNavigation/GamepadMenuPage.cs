@@ -1,8 +1,10 @@
+using System.Collections;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
-using System.Collections;
+// Import the new Input System namespace
+using UnityEngine.InputSystem;
 
 public class GamepadMenuPage : MonoBehaviour
 {
