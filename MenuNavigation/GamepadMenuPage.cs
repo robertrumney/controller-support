@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem; 
+using UnityEngine.InputSystem;
 
 using System.Collections;
 
@@ -12,12 +12,15 @@ public class GamepadMenuPage : MonoBehaviour
 
     public void OnEnable()
     {
-        if(enabled)
+        if (enabled)
             StartCoroutine(OnEnableRoutine());
     }
 
     private void OnDisable()
     {
+        if (Gamepad.current == null)
+            return;
+
         if (optionalSelectOnDisable)
         {
             if (optionalSelectOnDisable.gameObject.activeInHierarchy)
