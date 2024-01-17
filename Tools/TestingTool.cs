@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem; // Import the new Input System namespace
+
+// Import the new Input System namespace
+using UnityEngine.InputSystem; 
 
 public class TestingTool : MonoBehaviour
 {
