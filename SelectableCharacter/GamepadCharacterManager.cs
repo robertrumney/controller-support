@@ -1,7 +1,8 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 using System.Collections;
+
+// Import the new Input System namespace
+using UnityEngine.InputSystem;
 
 public class GamepadCharacterManager : MonoBehaviour
 {
