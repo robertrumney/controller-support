@@ -10,10 +10,11 @@ public class GamepadSmoothLook : MonoBehaviour
     private float sensitivityAmt;
 
     // Input ranges and rotations
-    private float minimumX = -360f;
-    private float maximumX = 360f;
-    private float minimumY = -78f;
-    private float maximumY = 85f;
+    private readonly float minimumX = -360f;
+    private readonly float maximumX = 360f;
+    private readonly float minimumY = -78f;
+    private readonly float maximumY = 85f;
+
     private float rotationX = 0.0f;
     private float rotationY = 0.0f;
 
@@ -26,7 +27,6 @@ public class GamepadSmoothLook : MonoBehaviour
 
     // Original and backup rotations
     private Quaternion originalRotation;
-    private Quaternion backup;
 
     // Input System variables
     private PlayerInput playerInput;
@@ -47,7 +47,6 @@ public class GamepadSmoothLook : MonoBehaviour
 
         // Initialize transformations
         originalRotation = transform.localRotation;
-        backup = originalRotation;
 
         // Initialize sensitivity
         sensitivityAmt = sensitivity;
