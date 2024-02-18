@@ -1,15 +1,19 @@
 using UnityEngine;
-
-// Needed for Event System
 using UnityEngine.EventSystems;
 
-// Import the new Input System namespace
-using UnityEngine.InputSystem;  
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class GamepadMenu : MonoBehaviour
 {
     private EventSystem eventSystem;
     private GameObject lastSelectedObject;
+
+    private void OnEnable()
+    {
+        if (EventSystem.current.GetComponent<InputSystemUIInputModule>())
+            EventSystem.current.GetComponent<InputSystemUIInputModule>().deselectOnBackgroundClick = false;
+    }
 
     private void Update()
     {
